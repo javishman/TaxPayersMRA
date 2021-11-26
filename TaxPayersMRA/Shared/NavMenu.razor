@@ -1,4 +1,7 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
+﻿@inject SessionManager SessionManager
+@inject NavigationManager NavManager
+
+<div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">TaxPayersMRA</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
@@ -13,13 +16,18 @@
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
+            <NavLink class="nav-link" href="add_tax_payer">
+                <span class="oi oi-plus" aria-hidden="true"></span> Add Tax Payer
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+            <NavLink class="nav-link" href="tax_payers">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Tax Payers
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="logout">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Logout
             </NavLink>
         </li>
     </ul>
@@ -27,11 +35,33 @@
 
 @code {
     private bool collapseNavMenu = true;
+    private string fullname = string.Empty;
+    private string username = string.Empty;
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        SetUserFullname();
+    }
+
+    private void SetUserFullname()
+    {
+        var loginResponse = SessionManager.GetLoginResponse();
+
+        if (loginResponse.UserDetails != null)
+        {
+            fullname = $"{loginResponse.UserDetails.FirstName} {loginResponse.UserDetails.LastName}";
+            username = loginResponse.UserDetails.Username;
+        }
+        else
+        {
+            NavManager.NavigateTo("/");
+        }
     }
 }

@@ -21,7 +21,31 @@ namespace TaxPayersMRA.Services
             }
             catch (Exception)
             {
-                return "https://www.mra.mw/sandbox";
+                return "https://www.mra.mw/sandbox/";
+            }
+        }
+
+        public string LoginUrl()
+        {
+            try
+            {
+                return _configuration.GetValue<string>("LoginUrl");
+            }
+            catch (Exception)
+            {
+                return "programming/challenge/webservice/auth/login";
+            }
+        }
+
+        public string LogoutUrl()
+        {
+            try
+            {
+                return _configuration.GetValue<string>("LogoutUrl");
+            }
+            catch (Exception)
+            {
+                return "programming/challenge/webservice/auth/logout";
             }
         }
 

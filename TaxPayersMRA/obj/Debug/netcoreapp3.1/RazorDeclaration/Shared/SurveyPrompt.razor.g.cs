@@ -75,6 +75,27 @@ using TaxPayersMRA.Shared;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 10 "C:\Users\Kol\source\repos\TaxPayersMRA\TaxPayersMRA\_Imports.razor"
+using TaxPayersMRA.Services;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 11 "C:\Users\Kol\source\repos\TaxPayersMRA\TaxPayersMRA\_Imports.razor"
+using TaxPayersMRA.ViewModels;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 12 "C:\Users\Kol\source\repos\TaxPayersMRA\TaxPayersMRA\_Imports.razor"
+using TaxPayersMRA.Responses;
+
+#line default
+#line hidden
+#nullable disable
     public partial class SurveyPrompt : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998

@@ -1,0 +1,103 @@
+﻿@page "/add_tax_payer"
+
+@using TaxPayersMRA.Data
+@inject TaxPayerService TaxPayerService
+@inject NavigationManager NavManager
+@inject SessionManager SessionManager
+
+<div class="col-md-10">
+    @if (result != string.Empty)
+    {
+        <p class="alert alert-danger">@result</p>
+    }
+
+    <div class="col-md-6 m-auto">
+        <EditForm Model="@taxPayer" OnValidSubmit="@HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <label>Email address</label>
+                <InputText id="name" @bind-Value="taxPayer.Email" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>TPIN</label>
+                <InputText id="name" @bind-Value="taxPayer.TPIN" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Business Certificate Number</label>
+                <InputText id="name" @bind-Value="taxPayer.BusinessCertificateNumber" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Business Registration Date</label>
+                <InputText id="name" @bind-Value="taxPayer.BusinessRegistrationDate" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Physical Location</label>
+                <InputText id="name" @bind-Value="taxPayer.PhysicalLocation" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Mobile Number</label>
+                <InputText id="name" @bind-Value="taxPayer.MobileNumber" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Trading Name</label>
+                <InputText id="name" @bind-Value="taxPayer.TradingName" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary">Add Tax Payer</button>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+
+    private string result = string.Empty;
+
+    private TaxPayer taxPayer = new TaxPayer();
+
+    protected override async Task OnInitializedAsync()
+    {
+        InitTaxPayer();
+    }
+
+    private void InitTaxPayer()
+    {
+        var loginResponse = SessionManager.GetLoginResponse();
+
+        if (loginResponse.UserDetails != null)
+        {
+            taxPayer.Username = $"{loginResponse.UserDetails.Username}";
+        }
+    }
+
+    protected async Task HandleValidSubmit()
+    {
+        try
+        {
+            await AddTaxPayerAsync();
+        }
+        catch (Exception e)
+        {
+            System.Diagnostics.Debug.WriteLine(e);
+        }
+    }
+
+    protected async Task AddTaxPayerAsync()
+    {
+        try
+        {
+
+            var added = await TaxPayerService.AddTaxPayerAsync(taxPayer);
+
+            if (added)
+            {
+                taxPayer = new TaxPayer();
+                NavManager.NavigateTo("/tax_payers");
+            }
+        }
+        catch (Exception e)
+        {
+            System.Diagnostics.Debug.WriteLine(e);
+        }
+    }
+}

@@ -76,13 +76,34 @@ using TaxPayersMRA.Shared;
 #line hidden
 #nullable disable
 #nullable restore
+#line 10 "C:\Users\Kol\source\repos\TaxPayersMRA\TaxPayersMRA\_Imports.razor"
+using TaxPayersMRA.Services;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 11 "C:\Users\Kol\source\repos\TaxPayersMRA\TaxPayersMRA\_Imports.razor"
+using TaxPayersMRA.ViewModels;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 12 "C:\Users\Kol\source\repos\TaxPayersMRA\TaxPayersMRA\_Imports.razor"
+using TaxPayersMRA.Responses;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 3 "C:\Users\Kol\source\repos\TaxPayersMRA\TaxPayersMRA\Pages\FetchData.razor"
 using TaxPayersMRA.Data;
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/fetchdata")]
+    [Microsoft.AspNetCore.Components.RouteAttribute("/tax_payers")]
     public partial class FetchData : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -91,19 +112,56 @@ using TaxPayersMRA.Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 39 "C:\Users\Kol\source\repos\TaxPayersMRA\TaxPayersMRA\Pages\FetchData.razor"
+#line 59 "C:\Users\Kol\source\repos\TaxPayersMRA\TaxPayersMRA\Pages\FetchData.razor"
        
-    private WeatherForecast[] forecasts;
+    private List<TaxPayer> taxPayers;
+
+    private string result = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+        try
+        {
+            await GetAllAsync();
+        }
+        catch (Exception e)
+        {
+            System.Diagnostics.Debug.WriteLine(e);
+        }
+    }
+
+    protected async Task GetAllAsync()
+    {
+        try
+        {
+            taxPayers = await TaxPayerService.GetTaxPayersAsync();
+        }
+        catch (Exception e)
+        {
+            System.Diagnostics.Debug.WriteLine(e);
+        }
+    }
+
+    private void DeleteTaxPayer(TaxPayer taxPayer)
+    {
+        SessionManager.SetTaxPayer(taxPayer);
+
+        NavManager.NavigateTo("/delete_tax_payer");
+    }
+
+    private void EditTaxPayer(TaxPayer taxPayer)
+    {
+        SessionManager.SetTaxPayer(taxPayer);
+
+        NavManager.NavigateTo("/edit_tax_payer");
     }
 
 #line default
 #line hidden
 #nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private WeatherForecastService ForecastService { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavManager { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private SessionManager SessionManager { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private TaxPayerService TaxPayerService { get; set; }
     }
 }
 #pragma warning restore 1591

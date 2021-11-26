@@ -75,6 +75,27 @@ using TaxPayersMRA.Shared;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 10 "C:\Users\Kol\source\repos\TaxPayersMRA\TaxPayersMRA\_Imports.razor"
+using TaxPayersMRA.Services;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 11 "C:\Users\Kol\source\repos\TaxPayersMRA\TaxPayersMRA\_Imports.razor"
+using TaxPayersMRA.ViewModels;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 12 "C:\Users\Kol\source\repos\TaxPayersMRA\TaxPayersMRA\_Imports.razor"
+using TaxPayersMRA.Responses;
+
+#line default
+#line hidden
+#nullable disable
     public partial class MainLayout : LayoutComponentBase
     {
         #pragma warning disable 1998
@@ -82,6 +103,37 @@ using TaxPayersMRA.Shared;
         {
         }
         #pragma warning restore 1998
+#nullable restore
+#line 20 "C:\Users\Kol\source\repos\TaxPayersMRA\TaxPayersMRA\Shared\MainLayout.razor"
+       
+    private string fullname = string.Empty;
+    private string username = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        SetUserFullname();
+    }
+
+    private void SetUserFullname()
+    {
+        var loginResponse = SessionManager.GetLoginResponse();
+
+        if (loginResponse.UserDetails != null)
+        {
+            fullname = $"{loginResponse.UserDetails.FirstName} {loginResponse.UserDetails.LastName}";
+            username = loginResponse.UserDetails.Username;
+        }
+        else
+        {
+            NavManager.NavigateTo("/");
+        }
+    }
+
+#line default
+#line hidden
+#nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavManager { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private SessionManager SessionManager { get; set; }
     }
 }
 #pragma warning restore 1591

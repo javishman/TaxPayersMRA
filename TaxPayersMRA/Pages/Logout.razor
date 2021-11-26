@@ -1,0 +1,47 @@
+﻿@page "/logout"
+
+@using TaxPayersMRA.Data
+@inject TaxPayerService TaxPayerService
+@inject NavigationManager NavManager
+@inject SessionManager SessionManager
+
+@code {
+
+    private string result = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            await LogoutAsync();
+        }
+        catch(Exception)
+        {
+
+        }
+        finally
+        {
+            NavManager.NavigateTo("/");
+        }
+    }
+
+    protected async Task LogoutAsync()
+    {
+        var email = SessionManager.GetLoginResponse().UserDetails.email;
+
+        var result = await TaxPayerService.LogOutUser(
+            new LogoutInfo
+            {
+                Email = email
+            });
+
+
+        if (result)
+        {
+            SessionManager.SetLoginResponse(new LoginResponse());
+        }
+
+        NavManager.NavigateTo("/");
+    }
+}
+

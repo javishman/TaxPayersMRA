@@ -1,15 +1,43 @@
 ﻿@inherits LayoutComponentBase
 
+@inject SessionManager SessionManager
+@inject NavigationManager NavManager
+
 <div class="sidebar">
     <NavMenu />
 </div>
 
 <div class="main">
     <div class="top-row px-4">
-        <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        <p>LOG OUT (<a href="/logout" target="_blank">@fullname)</a>)</p>
     </div>
 
     <div class="content px-4">
         @Body
     </div>
 </div>
+
+@code {
+    private string fullname = string.Empty;
+    private string username = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        SetUserFullname();
+    }
+
+    private void SetUserFullname()
+    {
+        var loginResponse = SessionManager.GetLoginResponse();
+
+        if (loginResponse.UserDetails != null)
+        {
+            fullname = $"{loginResponse.UserDetails.FirstName} {loginResponse.UserDetails.LastName}";
+            username = loginResponse.UserDetails.Username;
+        }
+        else
+        {
+            NavManager.NavigateTo("/");
+        }
+    }
+}

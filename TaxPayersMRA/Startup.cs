@@ -29,8 +29,20 @@ namespace TaxPayersMRA
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<Urls>();
+            services.AddScoped<Urls>();
             services.AddSingleton<WeatherForecastService>();
+            services.AddScoped<HttpContentCreator>();
+            services.AddSingleton<SessionManager>();
+
+            services.AddHttpClient<Services.TaxPayerService>(client =>
+            {
+                client.BaseAddress = new Uri(Configuration.GetValue<string>("BaseUrl"));
+
+                client.DefaultRequestHeaders.Accept.Clear();
+
+                client.DefaultRequestHeaders.Add("candidateid", Configuration.GetValue<string>("CandidateId"));
+                client.DefaultRequestHeaders.Add("apikey", Configuration.GetValue<string>("ApiKey"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
