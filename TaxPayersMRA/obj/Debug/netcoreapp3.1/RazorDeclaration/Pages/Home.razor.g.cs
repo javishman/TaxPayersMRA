@@ -96,6 +96,14 @@ using TaxPayersMRA.Responses;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 3 "C:\Users\Kol\source\repos\TaxPayersMRA\TaxPayersMRA\Pages\Home.razor"
+using TaxPayersMRA.Data;
+
+#line default
+#line hidden
+#nullable disable
+    [Microsoft.AspNetCore.Components.RouteAttribute("/home")]
     public partial class Home : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -103,6 +111,43 @@ using TaxPayersMRA.Responses;
         {
         }
         #pragma warning restore 1998
+#nullable restore
+#line 32 "C:\Users\Kol\source\repos\TaxPayersMRA\TaxPayersMRA\Pages\Home.razor"
+       
+    private List<TaxPayer> taxPayers;
+
+    private string message = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            await GetAllAsync();
+        }
+        catch (Exception e)
+        {
+            System.Diagnostics.Debug.WriteLine(e);
+        }
+    }
+
+    protected async Task GetAllAsync()
+    {
+        try
+        {
+            taxPayers = await TaxPayerService.GetTaxPayersAsync();
+        }
+        catch (Exception e)
+        {
+            System.Diagnostics.Debug.WriteLine(e);
+        }
+    }
+
+#line default
+#line hidden
+#nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavManager { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private SessionManager SessionManager { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private TaxPayerService TaxPayerService { get; set; }
     }
 }
 #pragma warning restore 1591
