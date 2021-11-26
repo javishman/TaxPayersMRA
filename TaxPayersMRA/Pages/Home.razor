@@ -13,8 +13,6 @@
 }
 else
 {
-    <a href="/add_tax_payer" type="button" class="btn btn-primary">Add Tax Payer</a>
-    <br/>
     if (taxPayers.Count == 0)
     {
         message = "No tax payers registered in the system";
@@ -27,6 +25,13 @@ else
     {
        message = $"{taxPayers.Count} Tax payers registered in the system";
     }
+
+    <p>@message</p>
+    if (taxPayers.Count != 0)
+                {
+                    <a href="tax_payers">View</a>
+                }
+
 }
 
 @code {

@@ -112,7 +112,7 @@ using TaxPayersMRA.Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 32 "C:\Users\Kol\source\repos\TaxPayersMRA\TaxPayersMRA\Pages\Home.razor"
+#line 37 "C:\Users\Kol\source\repos\TaxPayersMRA\TaxPayersMRA\Pages\Home.razor"
        
     private List<TaxPayer> taxPayers;
 

@@ -59,3 +59,5 @@ C:\Users\Kol\source\repos\TaxPayersMRA\TaxPayersMRA\obj\Debug\netcoreapp3.1\Razo
 C:\Users\Kol\source\repos\TaxPayersMRA\TaxPayersMRA\obj\Debug\netcoreapp3.1\Razor\Pages\Logout.razor.g.cs
 C:\Users\Kol\source\repos\TaxPayersMRA\TaxPayersMRA\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\DeleteTaxPayer.razor.g.cs
 C:\Users\Kol\source\repos\TaxPayersMRA\TaxPayersMRA\obj\Debug\netcoreapp3.1\Razor\Pages\DeleteTaxPayer.razor.g.cs
+C:\Users\Kol\source\repos\TaxPayersMRA\TaxPayersMRA\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Home.razor.g.cs
+C:\Users\Kol\source\repos\TaxPayersMRA\TaxPayersMRA\obj\Debug\netcoreapp3.1\Razor\Pages\Home.razor.g.cs
