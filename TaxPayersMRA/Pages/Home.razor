@@ -1,5 +1,60 @@
-﻿<h3>Home</h3>
+﻿@page "/home"
+
+@using TaxPayersMRA.Data
+@inject TaxPayerService TaxPayerService
+@inject SessionManager SessionManager
+@inject NavigationManager NavManager
+
+<h5>Tax Payers</h5>
+
+@if (taxPayers == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <a href="/add_tax_payer" type="button" class="btn btn-primary">Add Tax Payer</a>
+    <br/>
+    if (taxPayers.Count == 0)
+    {
+        message = "No tax payers registered in the system";
+    }
+    else if (taxPayers.Count == 1)
+    {
+        message = "1 tax pay registered in the system";
+    }
+    else
+    {
+       message = $"{taxPayers.Count} Tax payers registered in the system";
+    }
+}
 
 @code {
+    private List<TaxPayer> taxPayers;
 
+    private string message = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            await GetAllAsync();
+        }
+        catch (Exception e)
+        {
+            System.Diagnostics.Debug.WriteLine(e);
+        }
+    }
+
+    protected async Task GetAllAsync()
+    {
+        try
+        {
+            taxPayers = await TaxPayerService.GetTaxPayersAsync();
+        }
+        catch (Exception e)
+        {
+            System.Diagnostics.Debug.WriteLine(e);
+        }
+    }
 }
